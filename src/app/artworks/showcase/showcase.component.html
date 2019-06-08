@@ -1,0 +1,20 @@
+<div id="body">
+  <div class="row m-2 pt-2">
+    <div
+      *ngFor="let artwork of artworks"
+      class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 px-1"
+    >
+      <div class="square-box d-flex align-items-center mb-2 ">
+        <img class="image-fluid square-image" [src]="artwork.image" alt="" />
+        <!-- <div class="square-overlay"></div> -->
+        <div class="square-content d-flex align-items-start flex-column ">
+          <button class="btn btn-outline-light btn-sm m-2">
+            <fa-icon [icon]="faHeart"></fa-icon>
+          </button>
+          <p id="artworkTitle" class="mt-auto ml-2 mb-0">{{ artwork.title }}</p>
+          <p id="designer" class="ml-2 mb-1">{{ artwork.designer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

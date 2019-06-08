@@ -1,0 +1,14 @@
+#footer {
+  background-color: rgb(29, 35, 46);
+  color: white;
+  font-weight: 300;
+  font-size: 0.7rem;
+}
+
+#companyLogo {
+  height: 50px;
+}
+
+.footerDetails {
+  opacity: 0.7;
+}
