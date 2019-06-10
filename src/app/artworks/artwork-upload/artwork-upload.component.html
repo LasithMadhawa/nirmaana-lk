@@ -1,3 +1,15 @@
-<input type="text" placeholder="Title" [(ngModel)]="title" />
-<button (click)="onUploadArtwork()">Upload</button>
-<h2 class="mt-5">{{ newArtwork }}</h2>
+<form (submit)="onUploadArtwork(uploadForm)" #uploadForm="ngForm">
+  <input
+  type="text"
+  placeholder="Title"
+  name="title"
+  ngModel />
+
+  <input
+  type="text"
+  placeholder="Image Preview"
+  name="preview"
+  ngModel />
+
+  <button type="submit">Upload</button>
+</form>

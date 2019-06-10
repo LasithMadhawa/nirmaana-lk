@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -19,7 +20,7 @@ import { ArtworkUploadComponent } from './artworks/artwork-upload/artwork-upload
     ShowcaseComponent,
     ArtworkUploadComponent
   ],
-  imports: [BrowserModule, FontAwesomeModule, FormsModule],
+  imports: [BrowserModule, FontAwesomeModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent]
 })

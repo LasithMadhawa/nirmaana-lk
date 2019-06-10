@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ArtworksService } from '../artworks.service';
 
 @Component({
   selector: 'app-artwork-upload',
   templateUrl: './artwork-upload.component.html',
   styleUrls: ['./artwork-upload.component.css']
 })
-export class ArtworkUploadComponent implements OnInit {
-  newArtwork = 'NO CONTENT!!!';
-  title = 'Default';
+export class ArtworkUploadComponent {
+  enteredTitle = '';
+  enteredPreview = '';
 
-  onUploadArtwork() {
-    this.newArtwork = this.title;
+  constructor(public artworksService: ArtworksService) {
+
   }
 
-  constructor() {}
-
-  ngOnInit() {}
+  onUploadArtwork(form: NgForm) {
+    this.artworksService.addArtwork(form.value.title, form.value.preview);
+    form.resetForm();
+  }
 }
