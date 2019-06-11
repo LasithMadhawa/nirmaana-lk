@@ -31,7 +31,7 @@
         placeholder="Search all resources"
         aria-label="Search"
       />
-      <button class="btn btn-warning btn-lg my-2 my-sm-0 shadow" type="submit">
+      <button [routerLink]="['/show']" routerLinkActive="router-link-active"  class="btn btn-warning btn-lg my-2 my-sm-0 shadow" type="submit">
         <fa-icon [icon]="faSearch"></fa-icon><b> Search</b>
       </button>
     </form>

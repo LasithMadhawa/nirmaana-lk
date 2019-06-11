@@ -1,7 +1,18 @@
 const express = require ('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const artworksRoutes = require("./routes/artworks");
 
 const app = express();
+
+mongoose.connect('mongodb://localhost:27017/nirmaanalk', { useNewUrlParser: true})
+  .then(() => {
+    console.log("Connected to database");
+  })
+  .catch(() => {
+    console.log("Connection failed!")
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,35 +36,8 @@ function ignoreFavicon(req, res, next) {
     next();
   }
 }
-//##########################################################################
+//########################################################################
 
-app.post('/api/artworks', (req, res, next) => {
-  const artwork = req.body;
-  console.log(artwork);
-  res.status(201).json({
-    message: "Artwork added successfully!"
-  });
-})
-
-app.get('/api/artworks', (req,res, next) => {
-  const artworks = [
-    {
-      id: 'slkfjl',
-      title: 'Cocacola',
-      preview: 'slide1'
-    },
-    {
-      id: 'lkdc',
-      title: 'Design',
-      preview: 'slide2'
-    }
-  ]
-  res.status(200).json({
-    message: 'Artworks fetched successfully',
-    artworks: artworks
-  })
-});
-
-
+app.use('/api/artworks', artworksRoutes);
 
 module.exports = app;

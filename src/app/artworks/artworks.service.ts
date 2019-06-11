@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import {Artwork} from './artwork.model';
 
@@ -12,9 +13,18 @@ export class ArtworksService {
 constructor(private http: HttpClient) {}
 
   getArtworks() {
-    this.http.get<{message: string, artworks: Artwork[]}>('http://localhost:3000/api/artworks')
-    .subscribe((artworkData) => {
-      this.artworks = artworkData.artworks;
+    this.http.get<{message: string, artworks: any}>('http://localhost:3000/api/artworks')
+    .pipe(map((artworkData) => {
+      return artworkData.artworks.map(artwork => {
+        return {
+          title: artwork.title,
+          preview: artwork.preview,
+          id: artwork._id
+        };
+      });
+    }))
+    .subscribe((transformedArtworks) => {
+      this.artworks = transformedArtworks;
       this.artworkUploaded.next([...this.artworks]);
     });
   }
@@ -25,10 +35,20 @@ constructor(private http: HttpClient) {}
 
   addArtwork(title: string, preview: string) {
     const artwork: Artwork = {id: null, title, preview};
-    this.http.post<{ message: string }>('http://localhost:3000/api/artworks', artwork)
+    this.http.post<{ message: string, artworkId: string }>('http://localhost:3000/api/artworks', artwork)
     .subscribe(responseData => {
-      console.log(responseData.message);
+      const id = responseData.artworkId;
+      artwork.id = id;
       this.artworks.push(artwork);
+      this.artworkUploaded.next([...this.artworks]);
+    });
+  }
+
+  deleteArtwork(artworkId: string) {
+    this.http.delete('http://localhost:3000/api/artworks/' + artworkId)
+    .subscribe(() => {
+      const updatedArtworks = this.artworks.filter(artwork => artwork.id !==  artworkId);
+      this.artworks = updatedArtworks;
       this.artworkUploaded.next([...this.artworks]);
     });
   }

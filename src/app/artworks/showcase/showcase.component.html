@@ -8,9 +8,14 @@
         <img class="image-fluid square-image" [src]="artwork.preview" alt="" />
         <!-- <div class="square-overlay"></div> -->
         <div class="square-content d-flex align-items-start flex-column ">
-          <button class="btn btn-outline-light btn-sm m-2">
-            <fa-icon [icon]="faHeart"></fa-icon>
-          </button>
+          <div>
+            <button class="btn btn-outline-light btn-sm m-2">
+              <fa-icon [icon]="faHeart"></fa-icon>
+            </button>
+            <button class="btn btn-outline-danger btn-sm" (click)='OnDelete(artwork.id)'>
+              Delete
+            </button>
+          </div>
           <p id="artworkTitle" class="mt-auto ml-2 mb-0">{{ artwork.title }}</p>
           <!-- <p id="designer" class="ml-2 mb-1">{{ artwork.designer }}</p> -->
         </div>

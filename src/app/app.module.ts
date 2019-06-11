@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LandingComponent } from './landing/landing.component';
 import { ShowcaseComponent } from './artworks/showcase/showcase.component';
 import { ArtworkUploadComponent } from './artworks/artwork-upload/artwork-upload.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { ArtworkUploadComponent } from './artworks/artwork-upload/artwork-upload
     ShowcaseComponent,
     ArtworkUploadComponent
   ],
-  imports: [BrowserModule, FontAwesomeModule, FormsModule, HttpClientModule],
+  imports: [BrowserModule, FontAwesomeModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent]
 })

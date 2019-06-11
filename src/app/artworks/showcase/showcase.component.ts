@@ -25,6 +25,10 @@ ngOnInit() {
     });
 }
 
+OnDelete(artworkId: string) {
+  this.artworksService.deleteArtwork(artworkId);
+}
+
 ngOnDestroy() {
   this.artworkSub.unsubscribe();
 }
