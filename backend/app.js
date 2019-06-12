@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const artworksRoutes = require("./routes/artworks");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
@@ -39,5 +40,6 @@ function ignoreFavicon(req, res, next) {
 //########################################################################
 
 app.use('/api/artworks', artworksRoutes);
+app.use('/api/user', userRoutes);
 
 module.exports = app;

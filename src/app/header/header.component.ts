@@ -7,6 +7,8 @@ import {
   faEnvelope,
   faCheckDouble
 } from '@fortawesome/free-solid-svg-icons';
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +22,20 @@ export class HeaderComponent implements OnInit {
   faUser = faUser;
   faEnvelope = faEnvelope;
   faCheckDouble = faCheckDouble;
-  constructor() {}
+
+  constructor(public authService: AuthService) {}
+
+  onLogin(form: NgForm){
+
+  }
+
+  onSignUp(form: NgForm){
+    if (form.invalid) {
+      return;
+    }
+    this.authService.createUser(form.value.singUpEmail, form.value.signUpPassword);
+
+  }
 
   ngOnInit() {}
 }

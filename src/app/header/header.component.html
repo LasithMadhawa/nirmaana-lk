@@ -96,31 +96,45 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body px-5">
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text"
-              ><fa-icon [icon]="faAt"></fa-icon
-            ></span>
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Username or Email"
-          />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"
-              ><fa-icon [icon]="faKey"></fa-icon
-            ></span>
-          </div>
-          <input type="password" class="form-control" placeholder="Password" />
-        </div>
-        <button class="btn btn-primary btn-lg btn-block">
-          <b>Login</b>
-        </button>
-      </div>
+      <form (submit)=onLogin(loginForm) #loginForm="ngForm">
+          <div class="modal-body px-5">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><fa-icon [icon]="faAt"></fa-icon
+                  ></span>
+                </div>
+                <input
+                  name="email"
+                  ngModel
+                  type="email"
+                  class="form-control"
+                  placeholder="Username or Email"
+                  #emailInput="ngModel"
+                  required
+                  email
+                />
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><fa-icon [icon]="faKey"></fa-icon
+                  ></span>
+                </div>
+                <input
+                name="password"
+                ngModel
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                #passwordInput="ngModel"
+                required/>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg btn-block">
+                <b>Login</b>
+              </button>
+            </div>
+      </form>
       <div class="modal-footer mx-3">
         <p class="text-center">
           Registering to this website, you accept our
@@ -164,47 +178,65 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body px-5">
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text"
-              ><fa-icon [icon]="faUser"></fa-icon
-            ></span>
-          </div>
-          <input type="text" class="form-control" placeholder="Username" />
-        </div>
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text"
-              ><fa-icon [icon]="faEnvelope"></fa-icon
-            ></span>
-          </div>
-          <input type="email" class="form-control" placeholder="Email" />
-        </div>
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text"
-              ><fa-icon [icon]="faKey"></fa-icon
-            ></span>
-          </div>
-          <input type="password" class="form-control" placeholder="Password" />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"
-              ><fa-icon [icon]="faCheckDouble"></fa-icon
-            ></span>
-          </div>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Confirm password"
-          />
-        </div>
-        <button class="btn btn-primary btn-lg btn-block">
-          <b>Create your account</b>
-        </button>
-      </div>
+      <form (submit)=onSignUp(signUpForm) #signUpForm="ngForm">
+          <div class="modal-body px-5">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><fa-icon [icon]="faUser"></fa-icon
+                  ></span>
+                </div>
+                <input type="text" class="form-control" placeholder="Username" />
+              </div>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><fa-icon [icon]="faEnvelope"></fa-icon
+                  ></span>
+                </div>
+                <input
+                name="signUpEmail"
+                ngModel
+                type="email"
+                class="form-control"
+                placeholder="Email"
+                #signUpEmailInput="ngModel"
+                  required
+                  email />
+              </div>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><fa-icon [icon]="faKey"></fa-icon
+                  ></span>
+                </div>
+                <input
+                name="signUpPassword"
+                ngModel
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                #signUpPasswordInput="ngModel"
+                required/>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><fa-icon [icon]="faCheckDouble"></fa-icon
+                  ></span>
+                </div>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Confirm password"
+                />
+              </div>
+              <button type='submit' class="btn btn-primary btn-lg btn-block">
+                <b>Create your account</b>
+              </button>
+            </div>
+      </form>
+
       <div class="modal-footer mx-3">
         <p class="text-center">
           Registering to this website, you accept our
