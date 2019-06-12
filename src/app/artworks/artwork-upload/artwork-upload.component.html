@@ -1,11 +1,12 @@
 <div class="container">
-  <form class="form-group my-5" (submit)="onUploadArtwork(uploadForm)" #uploadForm="ngForm">
+  <form class="form-group my-5" (submit)="onSaveArtwork(uploadForm)" #uploadForm="ngForm">
     <input
     class="form-control my-2"
     type="text"
     placeholder="Title"
     name="title"
-    ngModel />
+    [ngModel]="artwork?.title"
+    #title = "ngModel" />
 
     <button class="btn btn-light shadow-sm" (click)='imagePicker.click()'>
       Upload Preview
@@ -17,7 +18,8 @@
     type="text"
     placeholder="Image Preview"
     name="preview"
-    ngModel />
+    [ngModel]= "artwork?.preview"
+    #preview = "ngModel" />
 
     <button
     class="btn btn-success btn-block"

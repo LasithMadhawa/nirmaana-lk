@@ -8,7 +8,8 @@ import { ArtworkUploadComponent } from './artworks/artwork-upload/artwork-upload
 const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'show', component: ShowcaseComponent },
-  { path: 'create', component: ArtworkUploadComponent}
+  { path: 'create', component: ArtworkUploadComponent},
+  { path: 'edit/:artworkId', component: ArtworkUploadComponent}
 ];
 
 @NgModule({
