@@ -22,19 +22,21 @@ export class ArtworkUploadComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       title: new FormControl(null, {validators: [Validators.required]}),
-      content: new FormControl(null, {validators: [Validators.required]})
+      preview: new FormControl(null, {validators: [Validators.required]})
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('artworkId')) {
+        console.log('entering to edit');
         this.mode = 'edit';
         this.artworkId = paramMap.get('artworkId');
         this.artworksService.getArtwork(this.artworkId).subscribe(artworkData => {
           this.artwork = {id: artworkData._id, title: artworkData.title, preview: artworkData.preview};
+          this.form.setValue({
+            title: this.artwork.title,
+            preview: this.artwork.preview}
+            );
         });
-        this.form.setValue({
-          title: this.artwork.title,
-          preview: this.artwork.preview}
-          );
+
       } else {
         this.mode = 'create';
         this.artworkId = null;
