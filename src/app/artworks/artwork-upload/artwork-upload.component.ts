@@ -10,8 +10,6 @@ import { Artwork } from '../artwork.model';
   styleUrls: ['./artwork-upload.component.css']
 })
 export class ArtworkUploadComponent implements OnInit {
-  enteredTitle = '';
-  enteredPreview = '';
   artwork: Artwork;
   private mode = 'create';
   private artworkId: string;
