@@ -3,12 +3,13 @@
   color: white;
   font-weight: 300;
   font-size: 0.7rem;
+  height: 500px;
 }
 
 #companyLogo {
-  height: 50px;
+  height: 80px;
 }
 
 .footerDetails {
-  opacity: 0.7;
+  opacity: 0.5;
 }
