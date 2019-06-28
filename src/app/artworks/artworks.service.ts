@@ -37,12 +37,14 @@ constructor(private http: HttpClient) {}
     return this.http.get<{_id: string, title: string, preview: string}>('http://localhost:3000/api/artworks/' + id);
   }
 
-  addArtwork(title: string, preview: string) {
-    const artwork: Artwork = {id: null, title, preview};
-    this.http.post<{ message: string, artworkId: string }>('http://localhost:3000/api/artworks', artwork)
+  addArtwork(title: string, preview: string, image: File) {
+    const artworkData = new FormData();
+    artworkData.append("title", title);
+    artworkData.append("preview", preview);
+    artworkData.append("image", image);
+    this.http.post<{ message: string, artworkId: string }>('http://localhost:3000/api/artworks', artworkData)
     .subscribe(responseData => {
-      const id = responseData.artworkId;
-      artwork.id = id;
+      const artwork: Artwork = {id: responseData.artworkId, title: title, preview: preview};
       this.artworks.push(artwork);
       this.artworkUploaded.next([...this.artworks]);
     });

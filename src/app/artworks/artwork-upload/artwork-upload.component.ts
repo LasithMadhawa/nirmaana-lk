@@ -4,6 +4,8 @@ import { ArtworksService } from '../artworks.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Artwork } from '../artwork.model';
 
+import { mimeType } from './mime-type.validator';
+
 @Component({
   selector: 'app-artwork-upload',
   templateUrl: './artwork-upload.component.html',
@@ -12,6 +14,7 @@ import { Artwork } from '../artwork.model';
 export class ArtworkUploadComponent implements OnInit {
   artwork: Artwork;
   form: FormGroup;
+  imagePreview: any;
   private mode = 'create';
   private artworkId: string;
 
@@ -20,7 +23,8 @@ export class ArtworkUploadComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       title: new FormControl(null, {validators: [Validators.required]}),
-      preview: new FormControl(null, {validators: [Validators.required]})
+      preview: new FormControl(null, {validators: [Validators.required]}),
+      image: new FormControl(null, {validators: [Validators.required], asyncValidators: [mimeType]})
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('artworkId')) {
@@ -42,9 +46,20 @@ export class ArtworkUploadComponent implements OnInit {
     });
   }
 
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({image: file});
+    this.form.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
   onSaveArtwork() {
     if (this.mode === 'create') {
-      this.artworksService.addArtwork(this.form.value.title, this.form.value.preview);
+      this.artworksService.addArtwork(this.form.value.title, this.form.value.preview, this.form.value.image);
     } else {
       this.artworksService.updateArtwork(this.artworkId, this.form.value.title, this.form.value.preview);
     }
