@@ -11,7 +11,7 @@ const MIME_TYPE_MAP = {
   "image/jpg": "jpg"
 };
 
-const storage = multer.diskStorage({
+const imgStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error("Invalid mime type");
@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
 
 router.post(
   "",
-  multer({ storage: storage }).single("image"),
+  multer({ storage: imgStorage }).single("image"),
   (req, res, next) => {
     const url = req.protocol + "://" + req.get("host");
     const artwork = new Artwork({
@@ -54,7 +54,7 @@ router.post(
 
 router.put(
   "/:id",
-  multer({ storage: storage }).single("image"),
+  multer({ storage: imgStorage }).single("image"),
   (req, res, next) => {
     let imagePath = req.body.imagePath;
     if (req.file) {

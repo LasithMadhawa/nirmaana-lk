@@ -15,6 +15,7 @@ export class ArtworkUploadComponent implements OnInit {
   artwork: Artwork;
   form: FormGroup;
   imagePreview: any;
+  tags = [{ display: "bla", value: "bla" }];
   private mode = "create";
   private artworkId: string;
 
@@ -30,7 +31,8 @@ export class ArtworkUploadComponent implements OnInit {
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType]
-      })
+      }),
+      tags: new FormControl(null, { validators: [Validators.required] })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("artworkId")) {
@@ -49,12 +51,20 @@ export class ArtworkUploadComponent implements OnInit {
             this.form.setValue({
               title: this.artwork.title,
               preview: this.artwork.preview,
-              image: this.artwork.imagePath
+              image: this.artwork.imagePath,
+              tags: this.tags
             });
+            this.imagePreview = this.artwork.imagePath;
           });
       } else {
         this.mode = "create";
         this.artworkId = null;
+        this.form.setValue({
+          title: null,
+          preview: null,
+          image: null,
+          tags: null
+        });
       }
     });
   }
@@ -71,7 +81,11 @@ export class ArtworkUploadComponent implements OnInit {
   }
 
   onSaveArtwork() {
+    if (this.form.invalid) {
+      return;
+    }
     if (this.mode === "create") {
+      console.log(this.form.value.tags);
       this.artworksService.addArtwork(
         this.form.value.title,
         this.form.value.preview,
