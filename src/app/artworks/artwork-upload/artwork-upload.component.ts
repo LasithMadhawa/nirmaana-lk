@@ -5,6 +5,7 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Artwork } from "../artwork.model";
 
 import { mimeType } from "./mime-type.validator";
+import { zipMimeType } from "./zip-mime-type.validator";
 
 @Component({
   selector: "app-artwork-upload",
@@ -31,6 +32,10 @@ export class ArtworkUploadComponent implements OnInit {
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType]
+      }),
+      zipFile: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [zipMimeType]
       }),
       tags: new FormControl(null, { validators: [Validators.required] })
     });
@@ -63,7 +68,8 @@ export class ArtworkUploadComponent implements OnInit {
           title: null,
           preview: null,
           image: null,
-          tags: null
+          tags: null,
+          zipFile: null
         });
       }
     });
@@ -80,16 +86,25 @@ export class ArtworkUploadComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  onFilePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ zipFile: file });
+    this.form.get("zipFile").updateValueAndValidity();
+    // console.log(this.form);
+  }
+
   onSaveArtwork() {
     if (this.form.invalid) {
       return;
     }
+    console.log(this.form);
+
     if (this.mode === "create") {
-      console.log(this.form.value.tags);
       this.artworksService.addArtwork(
         this.form.value.title,
         this.form.value.preview,
-        this.form.value.image
+        this.form.value.image,
+        this.form.value.zipFile
       );
     } else {
       this.artworksService.updateArtwork(
@@ -97,6 +112,7 @@ export class ArtworkUploadComponent implements OnInit {
         this.form.value.title,
         this.form.value.preview,
         this.form.value.image
+        // this.form.value.zipFile
       );
     }
     this.form.reset();

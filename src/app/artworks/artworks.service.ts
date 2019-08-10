@@ -48,11 +48,12 @@ export class ArtworksService {
     }>("http://localhost:3000/api/artworks/" + id);
   }
 
-  addArtwork(title: string, preview: string, image: File) {
+  addArtwork(title: string, preview: string, image: File, zipFile: File) {
     const artworkData = new FormData();
     artworkData.append("title", title);
     artworkData.append("preview", preview);
     artworkData.append("image", image);
+    artworkData.append("zipFile", zipFile);
     this.http
       .post<{ message: string; artwork: Artwork }>(
         "http://localhost:3000/api/artworks",

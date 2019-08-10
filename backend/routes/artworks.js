@@ -8,17 +8,55 @@ const router = express.Router();
 const MIME_TYPE_MAP = {
   "image/png": "png",
   "image/jpeg": "jpg",
-  "image/jpg": "jpg"
+  "image/jpg": "jpg",
+  "application/octet-stream": "rar"
 };
 
-const imgStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const isValid = MIME_TYPE_MAP[file.mimetype];
-    let error = new Error("Invalid mime type");
-    if (isValid) {
-      error = null;
-    }
-    cb(error, "backend/images");
+// const ZIP_MIME_TYPE_MAP = {
+//   "zipFile/rar": "rar"
+// };
+
+// const imgStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const isValid = MIME_TYPE_MAP[file.mimetype];
+//     let error = new Error("Invalid mime type oooii");
+//     if (isValid) {
+//       error = null;
+//     }
+//     cb(null, "backend/images");
+//   },
+//   filename: (req, file, cb) => {
+//     const name = file.originalname
+//       .toLowerCase()
+//       .split(" ")
+//       .join("-");
+//     const ext = MIME_TYPE_MAP[file.mimetype];
+//     cb(null, name + "-" + Date.now() + "." + ext);
+//   }
+// });
+
+// const zipStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const isValid = ZIP_MIME_TYPE_MAP[file.mimetype];
+//     let error = new Error("Invalid mime type yakoo");
+//     if (isValid) {
+//       error = null;
+//     }
+//     cb(error, "backend/files");
+//   },
+//   filename: (req, file, cb) => {
+//     const name = file.originalname
+//       .toLowerCase()
+//       .split(" ")
+//       .join("-");
+//     const ext = ZIP_MIME_TYPE_MAP[file.mimetype];
+//     cb(null, name + "-" + Date.now() + "." + ext);
+//   }
+// });
+
+const storage = multer.diskStorage({
+  destination: (req, res, cb) => {
+    cb(null, "backend/images");
   },
   filename: (req, file, cb) => {
     const name = file.originalname
@@ -32,13 +70,18 @@ const imgStorage = multer.diskStorage({
 
 router.post(
   "",
-  multer({ storage: imgStorage }).single("image"),
+  multer({ storage: storage }).fields([
+    { name: "image", maxCount: 1 },
+    { name: "zipFile", maxCount: 1 }
+  ]),
+  // multer({ storage: zipStorage }).array("zipFile"),
   (req, res, next) => {
+    console.log(req.files);
     const url = req.protocol + "://" + req.get("host");
     const artwork = new Artwork({
       title: req.body.title,
       preview: req.body.preview,
-      imagePath: url + "/images/" + req.file.filename
+      imagePath: url + "/images/" + req.files.image[0].filename
     });
     artwork.save().then(addedArtwork => {
       res.status(201).json({
@@ -54,7 +97,7 @@ router.post(
 
 router.put(
   "/:id",
-  multer({ storage: imgStorage }).single("image"),
+  multer({ storage: storage }).single("image"),
   (req, res, next) => {
     let imagePath = req.body.imagePath;
     if (req.file) {

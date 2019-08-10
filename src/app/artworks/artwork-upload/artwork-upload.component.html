@@ -19,6 +19,11 @@
       <img [src]="imagePreview" [alt]="form.value.title" />
     </div>
 
+    <a class="btn btn-light shadow-sm" (click)="filePicker.click()">
+      Project Files
+    </a>
+    <input type="file" #filePicker (change)="onFilePicked($event)" />
+
     <input
       class="form-control my-2"
       type="text"
