@@ -23,6 +23,7 @@
       Project Files
     </a>
     <input type="file" #filePicker (change)="onFilePicked($event)" />
+    <input [value]="zipFileName" readonly />
 
     <input
       class="form-control my-2"

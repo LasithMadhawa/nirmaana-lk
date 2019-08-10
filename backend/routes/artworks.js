@@ -81,7 +81,8 @@ router.post(
     const artwork = new Artwork({
       title: req.body.title,
       preview: req.body.preview,
-      imagePath: url + "/images/" + req.files.image[0].filename
+      imagePath: url + "/images/" + req.files.image[0].filename,
+      zipFilePath: url + "/images" + req.files.zipFile[0].filename
     });
     artwork.save().then(addedArtwork => {
       res.status(201).json({
@@ -97,18 +98,24 @@ router.post(
 
 router.put(
   "/:id",
-  multer({ storage: storage }).single("image"),
+  multer({ storage: storage }).fields([
+    { name: "image", maxCount: 1 },
+    { name: "zipFile", maxCount: 1 }
+  ]),
   (req, res, next) => {
     let imagePath = req.body.imagePath;
+    let zipFilePath = req.body.zipFilePath;
     if (req.file) {
       const url = req.protocol + "://" + req.get("host");
-      imagePath = url + "/images/" + req.file.filename;
+      imagePath = url + "/images/" + req.files[0].filename;
+      zipFilePath = url + "/images" + req.files.zipFile[0].filename;
     }
     const artwork = new Artwork({
       _id: req.body.id,
       title: req.body.title,
       preview: req.body.preview,
-      imagePath: imagePath
+      imagePath: imagePath,
+      zipFilePath: zipFilePath
     });
     Artwork.updateOne({ _id: req.params.id }, artwork).then(result => {
       console.log(result);

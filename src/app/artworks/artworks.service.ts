@@ -24,7 +24,8 @@ export class ArtworksService {
               title: artwork.title,
               preview: artwork.preview,
               id: artwork._id,
-              imagePath: artwork.imagePath
+              imagePath: artwork.imagePath,
+              zipFilePath: artwork.zipFilePath
             };
           });
         })
@@ -45,6 +46,7 @@ export class ArtworksService {
       title: string;
       preview: string;
       imagePath: string;
+      zipFilePath: string;
     }>("http://localhost:3000/api/artworks/" + id);
   }
 
@@ -64,7 +66,8 @@ export class ArtworksService {
           id: responseData.artwork.id,
           title: title,
           preview: preview,
-          imagePath: responseData.artwork.imagePath
+          imagePath: responseData.artwork.imagePath,
+          zipFilePath: responseData.artwork.zipFilePath
         };
         this.artworks.push(artwork);
         this.artworkUploaded.next([...this.artworks]);
@@ -75,21 +78,24 @@ export class ArtworksService {
     id: string,
     title: string,
     preview: string,
-    image: File | string
+    image: File | string,
+    zipFile: File | string
   ) {
     let artworkData: Artwork | FormData;
-    if (typeof image === "object") {
+    if (typeof image === "object" || typeof zipFile === "object") {
       artworkData = new FormData();
       artworkData.append("id", id);
       artworkData.append("title", title);
       artworkData.append("preview", preview);
       artworkData.append("image", image, title);
+      artworkData.append("zipFile", zipFile);
     } else {
       artworkData = {
         id: id,
         title: title,
         preview: preview,
-        imagePath: image
+        imagePath: image,
+        zipFilePath: zipFile
       };
     }
     this.http
@@ -101,7 +107,8 @@ export class ArtworksService {
           id: id,
           title: title,
           preview: preview,
-          imagePath: ""
+          imagePath: "",
+          zipFilePath: ""
         };
 
         updatedArtworks[oldArtworkIndex] = artwork;

@@ -16,6 +16,7 @@ export class ArtworkUploadComponent implements OnInit {
   artwork: Artwork;
   form: FormGroup;
   imagePreview: any;
+  zipFileName: string;
   tags = [{ display: "bla", value: "bla" }];
   private mode = "create";
   private artworkId: string;
@@ -51,15 +52,18 @@ export class ArtworkUploadComponent implements OnInit {
               id: artworkData._id,
               title: artworkData.title,
               preview: artworkData.preview,
-              imagePath: artworkData.imagePath
+              imagePath: artworkData.imagePath,
+              zipFilePath: artworkData.zipFilePath
             };
             this.form.setValue({
               title: this.artwork.title,
               preview: this.artwork.preview,
               image: this.artwork.imagePath,
+              zipFile: this.artwork.zipFilePath,
               tags: this.tags
             });
             this.imagePreview = this.artwork.imagePath;
+            this.zipFileName = this.artwork.zipFilePath;
           });
       } else {
         this.mode = "create";
@@ -90,7 +94,7 @@ export class ArtworkUploadComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({ zipFile: file });
     this.form.get("zipFile").updateValueAndValidity();
-    // console.log(this.form);
+    this.zipFileName = file.name;
   }
 
   onSaveArtwork() {
@@ -111,8 +115,8 @@ export class ArtworkUploadComponent implements OnInit {
         this.artworkId,
         this.form.value.title,
         this.form.value.preview,
-        this.form.value.image
-        // this.form.value.zipFile
+        this.form.value.image,
+        this.form.value.zipFile
       );
     }
     this.form.reset();
