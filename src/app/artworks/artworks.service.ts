@@ -4,6 +4,8 @@ import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { Artwork } from "./artwork.model";
+import { faTags } from "@fortawesome/free-solid-svg-icons";
+import { TagModelClass } from "ngx-chips/core/accessor";
 
 @Injectable({ providedIn: "root" })
 export class ArtworksService {
@@ -25,7 +27,8 @@ export class ArtworksService {
               preview: artwork.preview,
               id: artwork._id,
               imagePath: artwork.imagePath,
-              zipFilePath: artwork.zipFilePath
+              zipFilePath: artwork.zipFilePath,
+              tags: artwork.tags
             };
           });
         })
@@ -47,15 +50,23 @@ export class ArtworksService {
       preview: string;
       imagePath: string;
       zipFilePath: string;
+      tags: string;
     }>("http://localhost:3000/api/artworks/" + id);
   }
 
-  addArtwork(title: string, preview: string, image: File, zipFile: File) {
+  addArtwork(
+    title: string,
+    preview: string,
+    image: File,
+    zipFile: File,
+    tags: string
+  ) {
     const artworkData = new FormData();
     artworkData.append("title", title);
     artworkData.append("preview", preview);
     artworkData.append("image", image);
     artworkData.append("zipFile", zipFile);
+    artworkData.append("tags", tags);
     this.http
       .post<{ message: string; artwork: Artwork }>(
         "http://localhost:3000/api/artworks",
@@ -67,7 +78,8 @@ export class ArtworksService {
           title: title,
           preview: preview,
           imagePath: responseData.artwork.imagePath,
-          zipFilePath: responseData.artwork.zipFilePath
+          zipFilePath: responseData.artwork.zipFilePath,
+          tags: tags
         };
         this.artworks.push(artwork);
         this.artworkUploaded.next([...this.artworks]);
@@ -79,7 +91,8 @@ export class ArtworksService {
     title: string,
     preview: string,
     image: File | string,
-    zipFile: File | string
+    zipFile: File | string,
+    tags: string
   ) {
     let artworkData: Artwork | FormData;
     if (typeof image === "object" || typeof zipFile === "object") {
@@ -89,13 +102,15 @@ export class ArtworksService {
       artworkData.append("preview", preview);
       artworkData.append("image", image, title);
       artworkData.append("zipFile", zipFile);
+      artworkData.append("tags", tags);
     } else {
       artworkData = {
         id: id,
         title: title,
         preview: preview,
         imagePath: image,
-        zipFilePath: zipFile
+        zipFilePath: zipFile,
+        tags: tags
       };
     }
     this.http
@@ -108,7 +123,8 @@ export class ArtworksService {
           title: title,
           preview: preview,
           imagePath: "",
-          zipFilePath: ""
+          zipFilePath: "",
+          tags: tags
         };
 
         updatedArtworks[oldArtworkIndex] = artwork;

@@ -76,14 +76,15 @@ router.post(
   ]),
   // multer({ storage: zipStorage }).array("zipFile"),
   (req, res, next) => {
-    console.log(req.files);
     const url = req.protocol + "://" + req.get("host");
     const artwork = new Artwork({
       title: req.body.title,
       preview: req.body.preview,
       imagePath: url + "/images/" + req.files.image[0].filename,
-      zipFilePath: url + "/images" + req.files.zipFile[0].filename
+      zipFilePath: url + "/images" + req.files.zipFile[0].filename,
+      tags: JSON.parse(req.body.tags)
     });
+    console.log(artwork);
     artwork.save().then(addedArtwork => {
       res.status(201).json({
         message: "Artwork added successfully!",
@@ -115,7 +116,8 @@ router.put(
       title: req.body.title,
       preview: req.body.preview,
       imagePath: imagePath,
-      zipFilePath: zipFilePath
+      zipFilePath: zipFilePath,
+      tags: JSON.parse(req.body.tags)
     });
     Artwork.updateOne({ _id: req.params.id }, artwork).then(result => {
       console.log(result);

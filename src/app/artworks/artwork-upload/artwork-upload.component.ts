@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ArtworksService } from "../artworks.service";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { Artwork } from "../artwork.model";
+import { Router } from "@angular/router";
 
 import { mimeType } from "./mime-type.validator";
 import { zipMimeType } from "./zip-mime-type.validator";
@@ -17,13 +18,14 @@ export class ArtworkUploadComponent implements OnInit {
   form: FormGroup;
   imagePreview: any;
   zipFileName: string;
-  tags = [{ display: "bla", value: "bla" }];
+  // tags = [{ display: "bla", value: "bla" }];
   private mode = "create";
   private artworkId: string;
 
   constructor(
     public artworksService: ArtworksService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -53,14 +55,15 @@ export class ArtworkUploadComponent implements OnInit {
               title: artworkData.title,
               preview: artworkData.preview,
               imagePath: artworkData.imagePath,
-              zipFilePath: artworkData.zipFilePath
+              zipFilePath: artworkData.zipFilePath,
+              tags: artworkData.tags
             };
             this.form.setValue({
               title: this.artwork.title,
               preview: this.artwork.preview,
               image: this.artwork.imagePath,
               zipFile: this.artwork.zipFilePath,
-              tags: this.tags
+              tags: this.artwork.tags
             });
             this.imagePreview = this.artwork.imagePath;
             this.zipFileName = this.artwork.zipFilePath;
@@ -101,14 +104,15 @@ export class ArtworkUploadComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    console.log(this.form);
+    console.log(this.form.value);
 
     if (this.mode === "create") {
       this.artworksService.addArtwork(
         this.form.value.title,
         this.form.value.preview,
         this.form.value.image,
-        this.form.value.zipFile
+        this.form.value.zipFile,
+        JSON.stringify(this.form.value.tags).toLowerCase()
       );
     } else {
       this.artworksService.updateArtwork(
@@ -116,9 +120,11 @@ export class ArtworkUploadComponent implements OnInit {
         this.form.value.title,
         this.form.value.preview,
         this.form.value.image,
-        this.form.value.zipFile
+        this.form.value.zipFile,
+        JSON.stringify(this.form.value.tags).toLowerCase()
       );
     }
     this.form.reset();
+    this.router.navigate(["/show"]);
   }
 }

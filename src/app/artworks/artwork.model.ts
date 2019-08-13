@@ -4,4 +4,5 @@ export interface Artwork {
   preview: string;
   imagePath: string;
   zipFilePath: string;
+  tags: string;
 }
