@@ -17,12 +17,14 @@
               <fa-icon [icon]="faHeart"></fa-icon>
             </button>
             <button
+              *ngIf="userIsAuthenticated"
               class="btn btn-outline-danger btn-sm"
               (click)="OnDelete(artwork.id)"
             >
               Delete
             </button>
             <a
+              *ngIf="userIsAuthenticated"
               class="btn btn-outline-primary btn-sm ml-2"
               [routerLink]="['/edit', artwork.id]"
               routerLinkActive="router-link-active"

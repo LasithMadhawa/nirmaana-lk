@@ -1,5 +1,15 @@
 <div class="container">
-  <form [formGroup]="form" class="form-group my-5" (submit)="onSaveArtwork()">
+  <div *ngIf="isLoading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <form
+    *ngIf="!isLoading"
+    [formGroup]="form"
+    class="form-group my-5"
+    (submit)="onSaveArtwork()"
+  >
     <input
       class="form-control my-2"
       type="text"

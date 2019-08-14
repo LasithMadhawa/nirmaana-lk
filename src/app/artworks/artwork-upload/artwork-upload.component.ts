@@ -15,6 +15,7 @@ import { zipMimeType } from "./zip-mime-type.validator";
 })
 export class ArtworkUploadComponent implements OnInit {
   artwork: Artwork;
+  isLoading = false;
   form: FormGroup;
   imagePreview: any;
   zipFileName: string;
@@ -47,9 +48,11 @@ export class ArtworkUploadComponent implements OnInit {
         console.log("entering to edit");
         this.mode = "edit";
         this.artworkId = paramMap.get("artworkId");
+        this.isLoading = true;
         this.artworksService
           .getArtwork(this.artworkId)
           .subscribe(artworkData => {
+            this.isLoading = false;
             this.artwork = {
               id: artworkData._id,
               title: artworkData.title,
@@ -105,7 +108,7 @@ export class ArtworkUploadComponent implements OnInit {
       return;
     }
     console.log(this.form.value);
-
+    this.isLoading = true;
     if (this.mode === "create") {
       this.artworksService.addArtwork(
         this.form.value.title,

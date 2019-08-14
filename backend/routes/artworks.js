@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 
 const Artwork = require("../models/artwork");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
@@ -70,6 +71,7 @@ const storage = multer.diskStorage({
 
 router.post(
   "",
+  checkAuth,
   multer({ storage: storage }).fields([
     { name: "image", maxCount: 1 },
     { name: "zipFile", maxCount: 1 }
@@ -99,6 +101,7 @@ router.post(
 
 router.put(
   "/:id",
+  checkAuth,
   multer({ storage: storage }).fields([
     { name: "image", maxCount: 1 },
     { name: "zipFile", maxCount: 1 }
@@ -145,7 +148,7 @@ router.get("/:id", (req, res, next) => {
   });
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", checkAuth, (req, res, next) => {
   Artwork.deleteOne({ _id: req.params.id }).then(result => {
     console.log(result);
     res.status(200).json({ message: "Post Deleted!" });
