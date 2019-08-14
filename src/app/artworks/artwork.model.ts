@@ -5,4 +5,5 @@ export interface Artwork {
   imagePath: string;
   zipFilePath: string;
   tags: string;
+  designer: string;
 }

@@ -5,7 +5,12 @@ const artworkSchema = mongoose.Schema({
   preview: { type: String, required: true },
   imagePath: { type: String, required: true },
   zipFilePath: { type: String, required: true },
-  tags: { type: JSON, required: true }
+  tags: { type: JSON, required: true },
+  designer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  }
 });
 
 module.exports = mongoose.model("Artwork", artworkSchema);

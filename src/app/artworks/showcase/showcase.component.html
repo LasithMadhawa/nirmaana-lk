@@ -17,7 +17,7 @@
               <fa-icon [icon]="faHeart"></fa-icon>
             </button>
             <button
-              *ngIf="userIsAuthenticated"
+              *ngIf="userIsAuthenticated && userId === artwork.designer"
               class="btn btn-outline-danger btn-sm"
               (click)="OnDelete(artwork.id)"
             >

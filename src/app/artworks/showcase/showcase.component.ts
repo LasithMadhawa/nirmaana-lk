@@ -13,6 +13,7 @@ import { AuthService } from "src/app/header/auth.service";
 export class ShowcaseComponent implements OnInit, OnDestroy {
   faHeart = faHeart;
 
+  userId: string;
   artworks: Artwork[] = [];
   userIsAuthenticated = false;
   private artworkSub: Subscription;
@@ -24,6 +25,7 @@ export class ShowcaseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.userId = this.authService.getUserId();
     this.artworksService.getArtworks();
     this.artworkSub = this.artworksService
       .getArtworkUpdateListener()
@@ -35,6 +37,7 @@ export class ShowcaseComponent implements OnInit, OnDestroy {
       .getAuthStatusListner()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
       });
   }
 

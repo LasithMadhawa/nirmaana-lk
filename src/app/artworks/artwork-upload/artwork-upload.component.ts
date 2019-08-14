@@ -59,7 +59,8 @@ export class ArtworkUploadComponent implements OnInit {
               preview: artworkData.preview,
               imagePath: artworkData.imagePath,
               zipFilePath: artworkData.zipFilePath,
-              tags: artworkData.tags
+              tags: artworkData.tags,
+              designer: artworkData.designer
             };
             this.form.setValue({
               title: this.artwork.title,

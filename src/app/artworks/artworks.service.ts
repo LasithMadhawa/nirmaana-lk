@@ -28,7 +28,8 @@ export class ArtworksService {
               id: artwork._id,
               imagePath: artwork.imagePath,
               zipFilePath: artwork.zipFilePath,
-              tags: artwork.tags
+              tags: artwork.tags,
+              designer: artwork.designer
             };
           });
         })
@@ -51,6 +52,7 @@ export class ArtworksService {
       imagePath: string;
       zipFilePath: string;
       tags: string;
+      designer: string;
     }>("http://localhost:3000/api/artworks/" + id);
   }
 
@@ -79,7 +81,8 @@ export class ArtworksService {
           preview: preview,
           imagePath: responseData.artwork.imagePath,
           zipFilePath: responseData.artwork.zipFilePath,
-          tags: tags
+          tags: tags,
+          designer: null
         };
         this.artworks.push(artwork);
         this.artworkUploaded.next([...this.artworks]);
@@ -110,7 +113,8 @@ export class ArtworksService {
         preview: preview,
         imagePath: image,
         zipFilePath: zipFile,
-        tags: tags
+        tags: tags,
+        designer: null
       };
     }
     this.http
@@ -124,7 +128,8 @@ export class ArtworksService {
           preview: preview,
           imagePath: "",
           zipFilePath: "",
-          tags: tags
+          tags: tags,
+          designer: null
         };
 
         updatedArtworks[oldArtworkIndex] = artwork;

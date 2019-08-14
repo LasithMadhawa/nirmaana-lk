@@ -84,9 +84,9 @@ router.post(
       preview: req.body.preview,
       imagePath: url + "/images/" + req.files.image[0].filename,
       zipFilePath: url + "/images" + req.files.zipFile[0].filename,
-      tags: JSON.parse(req.body.tags)
+      tags: JSON.parse(req.body.tags),
+      designer: req.userData.userId
     });
-    console.log(artwork);
     artwork.save().then(addedArtwork => {
       res.status(201).json({
         message: "Artwork added successfully!",
@@ -120,11 +120,18 @@ router.put(
       preview: req.body.preview,
       imagePath: imagePath,
       zipFilePath: zipFilePath,
-      tags: JSON.parse(req.body.tags)
+      tags: JSON.parse(req.body.tags),
+      designer: req.userData.userId
     });
-    Artwork.updateOne({ _id: req.params.id }, artwork).then(result => {
-      console.log(result);
-      res.status(200).json({ message: "Updated Successfully" });
+    Artwork.updateOne(
+      { _id: req.params.id, designer: req.userData.userId },
+      artwork
+    ).then(result => {
+      if (result.nModified > 0) {
+        res.status(200).json({ message: "Updated Successfully" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
     });
   }
 );
@@ -150,8 +157,11 @@ router.get("/:id", (req, res, next) => {
 
 router.delete("/:id", checkAuth, (req, res, next) => {
   Artwork.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
-    res.status(200).json({ message: "Post Deleted!" });
+    if (result.n > 0) {
+      res.status(200).json({ message: "Post Deleted!" });
+    } else {
+      res.status(401).json({ message: "Deletion Unsuccessful" });
+    }
   });
 });
 
