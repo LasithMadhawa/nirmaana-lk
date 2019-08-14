@@ -24,6 +24,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faEnvelope = faEnvelope;
   faCheckDouble = faCheckDouble;
 
+  isLoading = false;
+
   userIsAuthenticated = false;
   private authListnerSubs: Subscription;
 
@@ -35,6 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .getAuthStatusListner()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
+        this.closeSignInForm();
       });
   }
 
@@ -42,11 +45,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authListnerSubs.unsubscribe();
   }
 
+  onSignInBtn() {
+    this.isLoading = this.userIsAuthenticated;
+  }
+
   onLogin(form: NgForm) {
     if (form.invalid) {
       return;
     }
+    this.isLoading = true;
     this.authService.login(form.value.email, form.value.password);
+    form.reset();
+    // this.isLoading = false;
+    // this.closeSignInForm();
   }
 
   onSignup(form: NgForm) {
@@ -60,9 +71,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-  signInForm() {
+  closeSignInForm() {
     const element: HTMLElement = document.getElementById(
-      "signInBtn"
+      "closeBtn"
     ) as HTMLElement;
     element.click();
     console.log(element);

@@ -68,6 +68,7 @@
       data-toggle="modal"
       data-target="#signInModal"
       id="signInBtn"
+      (click)="onSignInBtn()"
     >
       Sign in
     </button>
@@ -109,12 +110,23 @@
           class="close"
           data-dismiss="modal"
           aria-label="Close"
+          id="closeBtn"
         >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body px-5">
-        <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
+        <!-- spinner----------- -->
+        <div *ngIf="isLoading" class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <form
+          *ngIf="!isLoading"
+          (submit)="onLogin(loginForm)"
+          #loginForm="ngForm"
+        >
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text"

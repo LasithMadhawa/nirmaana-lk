@@ -24,7 +24,7 @@
               Delete
             </button>
             <a
-              *ngIf="userIsAuthenticated"
+              *ngIf="userIsAuthenticated && userId === artwork.designer"
               class="btn btn-outline-primary btn-sm ml-2"
               [routerLink]="['/edit', artwork.id]"
               routerLinkActive="router-link-active"
