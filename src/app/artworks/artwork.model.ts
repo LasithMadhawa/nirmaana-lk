@@ -3,4 +3,7 @@ export interface Artwork {
   title: string;
   preview: string;
   imagePath: string;
+  zipFilePath: string;
+  tags: string;
+  designer: string;
 }

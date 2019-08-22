@@ -4,6 +4,8 @@ import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { Artwork } from "./artwork.model";
+import { faTags } from "@fortawesome/free-solid-svg-icons";
+import { TagModelClass } from "ngx-chips/core/accessor";
 
 @Injectable({ providedIn: "root" })
 export class ArtworksService {
@@ -24,7 +26,10 @@ export class ArtworksService {
               title: artwork.title,
               preview: artwork.preview,
               id: artwork._id,
-              imagePath: artwork.imagePath
+              imagePath: artwork.imagePath,
+              zipFilePath: artwork.zipFilePath,
+              tags: artwork.tags,
+              designer: artwork.designer
             };
           });
         })
@@ -45,14 +50,25 @@ export class ArtworksService {
       title: string;
       preview: string;
       imagePath: string;
+      zipFilePath: string;
+      tags: string;
+      designer: string;
     }>("http://localhost:3000/api/artworks/" + id);
   }
 
-  addArtwork(title: string, preview: string, image: File) {
+  addArtwork(
+    title: string,
+    preview: string,
+    image: File,
+    zipFile: File,
+    tags: string
+  ) {
     const artworkData = new FormData();
     artworkData.append("title", title);
     artworkData.append("preview", preview);
     artworkData.append("image", image);
+    artworkData.append("zipFile", zipFile);
+    artworkData.append("tags", tags);
     this.http
       .post<{ message: string; artwork: Artwork }>(
         "http://localhost:3000/api/artworks",
@@ -63,7 +79,10 @@ export class ArtworksService {
           id: responseData.artwork.id,
           title: title,
           preview: preview,
-          imagePath: responseData.artwork.imagePath
+          imagePath: responseData.artwork.imagePath,
+          zipFilePath: responseData.artwork.zipFilePath,
+          tags: tags,
+          designer: null
         };
         this.artworks.push(artwork);
         this.artworkUploaded.next([...this.artworks]);
@@ -74,21 +93,28 @@ export class ArtworksService {
     id: string,
     title: string,
     preview: string,
-    image: File | string
+    image: File | string,
+    zipFile: File | string,
+    tags: string
   ) {
     let artworkData: Artwork | FormData;
-    if (typeof image === "object") {
+    if (typeof image === "object" || typeof zipFile === "object") {
       artworkData = new FormData();
       artworkData.append("id", id);
       artworkData.append("title", title);
       artworkData.append("preview", preview);
       artworkData.append("image", image, title);
+      artworkData.append("zipFile", zipFile);
+      artworkData.append("tags", tags);
     } else {
       artworkData = {
         id: id,
         title: title,
         preview: preview,
-        imagePath: image
+        imagePath: image,
+        zipFilePath: zipFile,
+        tags: tags,
+        designer: null
       };
     }
     this.http
@@ -100,7 +126,10 @@ export class ArtworksService {
           id: id,
           title: title,
           preview: preview,
-          imagePath: ""
+          imagePath: "",
+          zipFilePath: "",
+          tags: tags,
+          designer: null
         };
 
         updatedArtworks[oldArtworkIndex] = artwork;
