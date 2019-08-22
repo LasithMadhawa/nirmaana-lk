@@ -1,5 +1,9 @@
 <div id="body">
   <div class="row m-2 pt-2">
+    <h2 class="text-center mx-auto my-5" *ngIf="artworks.length == 0">
+      <span class="text-primary">I'm sorry :(</span> No results found!
+    </h2>
+
     <div
       *ngFor="let artwork of artworks"
       class="col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 px-1"
@@ -18,14 +22,14 @@
             </button>
             <button
               *ngIf="userIsAuthenticated && userId === artwork.designer"
-              class="btn btn-outline-danger btn-sm"
+              class="btn btn-outline-light btn-sm"
               (click)="OnDelete(artwork.id)"
             >
               Delete
             </button>
             <a
               *ngIf="userIsAuthenticated && userId === artwork.designer"
-              class="btn btn-outline-primary btn-sm ml-2"
+              class="btn btn-outline-light btn-sm ml-2"
               [routerLink]="['/edit', artwork.id]"
               routerLinkActive="router-link-active"
             >

@@ -145,6 +145,16 @@ router.get("", (req, res, next) => {
   });
 });
 
+router.get("/searchByTag", (req, res, next) => {
+  let tag = req.query.searchTag;
+  Artwork.find({ "tags.value": tag }).then(documents => {
+    res.status(200).json({
+      message: "Artworks fetched successfully",
+      artworks: documents
+    });
+  });
+});
+
 router.get("/:id", (req, res, next) => {
   Artwork.findById(req.params.id).then(artwork => {
     if (artwork) {
