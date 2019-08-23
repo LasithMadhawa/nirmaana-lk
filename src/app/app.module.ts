@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { RouteReuseStrategy } from "@angular/router/";
 
 import { AppComponent } from "./app.component";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
@@ -15,7 +16,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { TagInputModule } from "ngx-chips";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthInterceptor } from "./header/auth-interceptor";
-import { ArtworkViewComponent } from './artworks/artwork-view/artwork-view/artwork-view.component';
+import { ArtworkViewComponent } from "./artworks/artwork-view/artwork-view/artwork-view.component";
+import { CacheRouteReuseStrategy } from "./cache-route-reuse.strategy";
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { ArtworkViewComponent } from './artworks/artwork-view/artwork-view/artwo
     BrowserAnimationsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: RouteReuseStrategy, useClass: CacheRouteReuseStrategy }
   ],
   bootstrap: [AppComponent]
 })
