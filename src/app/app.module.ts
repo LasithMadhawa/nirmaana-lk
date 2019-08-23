@@ -15,6 +15,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { TagInputModule } from "ngx-chips";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthInterceptor } from "./header/auth-interceptor";
+import { ArtworkViewComponent } from './artworks/artwork-view/artwork-view/artwork-view.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AuthInterceptor } from "./header/auth-interceptor";
     FooterComponent,
     LandingComponent,
     ShowcaseComponent,
-    ArtworkUploadComponent
+    ArtworkUploadComponent,
+    ArtworkViewComponent
   ],
   imports: [
     BrowserModule,

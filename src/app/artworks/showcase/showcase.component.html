@@ -15,7 +15,11 @@
           alt="artwork.title"
         />
         <!-- <div class="square-overlay"></div> -->
-        <div class="square-content d-flex align-items-start flex-column ">
+        <a
+          class="square-content d-flex align-items-start flex-column"
+          [routerLink]="['/view', artwork.id]"
+          routerLinkActive="router-link-active"
+        >
           <div>
             <button class="btn btn-outline-light btn-sm m-2">
               <fa-icon [icon]="faHeart"></fa-icon>
@@ -38,7 +42,7 @@
           </div>
           <p id="artworkTitle" class="mt-auto ml-2 mb-0">{{ artwork.title }}</p>
           <!-- <p id="designer" class="ml-2 mb-1">{{ artwork.designer }}</p> -->
-        </div>
+        </a>
       </div>
     </div>
   </div>
