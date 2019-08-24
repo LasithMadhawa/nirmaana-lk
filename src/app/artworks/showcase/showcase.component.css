@@ -43,10 +43,11 @@
 }
 
 .square-box:before {
-  content: '';
+  content: "";
   display: block;
   padding-top: 100%;
 }
+
 .square-content {
   position: absolute;
   top: 0;
@@ -69,7 +70,7 @@
   opacity: 1;
   transition-property: all;
   transition-duration: 0.25s;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 #artworkTitle {

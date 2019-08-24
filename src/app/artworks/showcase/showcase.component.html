@@ -14,12 +14,10 @@
           [src]="artwork.imagePath"
           alt="artwork.title"
         />
+        <!-- <div class="square-click">Blaa</div> -->
+
         <!-- <div class="square-overlay"></div> -->
-        <a
-          class="square-content d-flex align-items-start flex-column"
-          [routerLink]="['/view', artwork.id]"
-          routerLinkActive="router-link-active"
-        >
+        <a class="square-content d-flex align-items-start flex-column">
           <div>
             <button class="btn btn-outline-light btn-sm m-2">
               <fa-icon [icon]="faHeart"></fa-icon>
@@ -40,7 +38,14 @@
               Edit
             </a>
           </div>
-          <p id="artworkTitle" class="mt-auto ml-2 mb-0">{{ artwork.title }}</p>
+          <a
+            id="artworkTitle"
+            class="mt-auto ml-2 mb-2 font-weight-bold text-light"
+            [routerLink]="['/view', artwork.id]"
+            routerLinkActive="router-link-active"
+          >
+            {{ artwork.title }}
+          </a>
           <!-- <p id="designer" class="ml-2 mb-1">{{ artwork.designer }}</p> -->
         </a>
       </div>
