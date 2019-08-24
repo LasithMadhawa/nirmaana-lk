@@ -6,6 +6,7 @@ import { map } from "rxjs/operators";
 import { Artwork } from "./artwork.model";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
 import { TagModelClass } from "ngx-chips/core/accessor";
+import { User } from "../users/user.model";
 
 @Injectable({ providedIn: "root" })
 export class ArtworksService {
@@ -54,7 +55,7 @@ export class ArtworksService {
               id: artwork._id,
               imagePath: artwork.imagePath,
               zipFilePath: artwork.zipFilePath,
-              tags: artwork.tags,
+              tags: artwork.tags.value,
               designer: artwork.designer
             };
           });
@@ -78,7 +79,7 @@ export class ArtworksService {
       imagePath: string;
       zipFilePath: string;
       tags: string;
-      designer: string;
+      designer: User[];
     }>("http://localhost:3000/api/artworks/" + id);
   }
 

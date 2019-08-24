@@ -25,6 +25,7 @@ export class ArtworkViewComponent implements OnInit {
   //   __v: 0
   // };
 
+  designer: string;
   artwork: Artwork;
   private artworkId: string;
 

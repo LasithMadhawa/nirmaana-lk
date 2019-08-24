@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faCheckDouble = faCheckDouble;
 
   isLoading = false;
+  userId: string;
 
   userIsAuthenticated = false;
   private authListnerSubs: Subscription;
@@ -39,6 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
         this.closeSignInForm();
+        this.userId = this.authService.getUserId();
       });
   }
 
@@ -65,7 +67,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (form.invalid) {
       return;
     }
-    this.authService.createUser(form.value.email, form.value.password);
+    this.authService.createUser(
+      form.value.email,
+      form.value.password,
+      form.value.username
+    );
   }
 
   onLogout() {

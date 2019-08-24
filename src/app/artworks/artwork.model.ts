@@ -1,3 +1,5 @@
+import { User } from "../users/user.model";
+
 export interface Artwork {
   id: string;
   title: string;
@@ -5,5 +7,5 @@ export interface Artwork {
   imagePath: string;
   zipFilePath: string;
   tags: string;
-  designer: string;
+  designer: User[];
 }

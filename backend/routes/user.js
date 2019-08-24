@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hash => {
     const user = new User({
+      username: req.body.username,
       email: req.body.email,
       password: hash
     });
@@ -61,6 +62,18 @@ router.post("/login", (req, res, next) => {
       return res.status(401).json({
         message: "Auth failed!!!"
       });
+    });
+});
+
+router.get("/:id", (req, res, next) => {
+  User.findById(req.params.id)
+    .populate("downloads", "favourites")
+    .then(user => {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: "User Not Found" });
+      }
     });
 });
 

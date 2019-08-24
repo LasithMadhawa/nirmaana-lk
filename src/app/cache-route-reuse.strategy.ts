@@ -10,7 +10,7 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
     curr: ActivatedRouteSnapshot
   ): boolean {
     if (
-      this.getPath(before) === "view/:artworkId" &&
+      (this.getPath(before) === "view/:artworkId" || "edit/:artworkId") &&
       this.getPath(curr) === "show"
     ) {
       this.allowRetriveCache["show"] = true;

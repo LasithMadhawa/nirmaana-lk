@@ -137,32 +137,38 @@ router.put(
 );
 
 router.get("", (req, res, next) => {
-  Artwork.find().then(documents => {
-    res.status(200).json({
-      message: "Artworks fetched successfully",
-      artworks: documents
+  Artwork.find()
+    .populate("designer")
+    .then(documents => {
+      res.status(200).json({
+        message: "Artworks fetched successfully",
+        artworks: documents
+      });
     });
-  });
 });
 
 router.get("/searchByTag", (req, res, next) => {
   let tag = req.query.searchTag;
-  Artwork.find({ "tags.value": tag }).then(documents => {
-    res.status(200).json({
-      message: "Artworks fetched successfully",
-      artworks: documents
+  Artwork.find({ "tags.value": tag })
+    .populate("designer")
+    .then(documents => {
+      res.status(200).json({
+        message: "Artworks fetched successfully",
+        artworks: documents
+      });
     });
-  });
 });
 
 router.get("/:id", (req, res, next) => {
-  Artwork.findById(req.params.id).then(artwork => {
-    if (artwork) {
-      res.status(200).json(artwork);
-    } else {
-      res.status(404).json({ message: "Artwork not found" });
-    }
-  });
+  Artwork.findById(req.params.id)
+    .populate("designer")
+    .then(artwork => {
+      if (artwork) {
+        res.status(200).json(artwork);
+      } else {
+        res.status(404).json({ message: "Artwork not found" });
+      }
+    });
 });
 
 router.delete("/:id", checkAuth, (req, res, next) => {

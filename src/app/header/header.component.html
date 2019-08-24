@@ -77,8 +77,16 @@
     </button>
     <button
       *ngIf="userIsAuthenticated"
-      (click)="onLogout()"
+      [routerLink]="['/user', userId]"
+      routerLinkActive="router-link-active"
       class="btn btn-warning btn-sm ml-2"
+    >
+      Go to Profile
+    </button>
+    <button
+      *ngIf="userIsAuthenticated"
+      (click)="onLogout()"
+      class="btn btn-primary btn-sm ml-2"
     >
       Logout
     </button>
@@ -227,7 +235,15 @@
                 ><fa-icon [icon]="faUser"></fa-icon
               ></span>
             </div>
-            <input type="text" class="form-control" placeholder="Username" />
+            <input
+              name="username"
+              ngModel
+              type="text"
+              class="form-control"
+              placeholder="Username"
+              #username="ngModel"
+              required
+            />
           </div>
           <div class="input-group mb-2">
             <div class="input-group-prepend">

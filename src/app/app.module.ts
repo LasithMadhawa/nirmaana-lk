@@ -18,6 +18,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthInterceptor } from "./header/auth-interceptor";
 import { ArtworkViewComponent } from "./artworks/artwork-view/artwork-view/artwork-view.component";
 import { CacheRouteReuseStrategy } from "./cache-route-reuse.strategy";
+import { ProfileComponent } from './users/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CacheRouteReuseStrategy } from "./cache-route-reuse.strategy";
     LandingComponent,
     ShowcaseComponent,
     ArtworkUploadComponent,
-    ArtworkViewComponent
+    ArtworkViewComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

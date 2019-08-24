@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Injectable } from "@angular/core";
+import { Component, OnInit, OnDestroy, Injectable, Input } from "@angular/core";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Artwork } from "../artwork.model";
 import { ArtworksService } from "../artworks.service";
@@ -13,8 +13,9 @@ import { AuthService } from "src/app/header/auth.service";
 export class ShowcaseComponent implements OnInit, OnDestroy {
   faHeart = faHeart;
 
+  @Input() artworks: Artwork[] = null;
+  username: string;
   userId: string;
-  artworks: Artwork[] = [];
   userIsAuthenticated = false;
   private artworkSub: Subscription;
   private authStatusSub: Subscription;
@@ -27,11 +28,13 @@ export class ShowcaseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userId = this.authService.getUserId();
     // this.artworksService.getArtworks();
-    this.artworkSub = this.artworksService
-      .getArtworkUpdateListener()
-      .subscribe((artworks: Artwork[]) => {
-        this.artworks = artworks;
-      });
+    if (this.artworks === null) {
+      this.artworkSub = this.artworksService
+        .getArtworkUpdateListener()
+        .subscribe((artworks: Artwork[]) => {
+          this.artworks = artworks;
+        });
+    }
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
       .getAuthStatusListner()
@@ -39,6 +42,7 @@ export class ShowcaseComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+    console.log(this.userId + this.userIsAuthenticated);
   }
 
   OnDelete(artworkId: string) {

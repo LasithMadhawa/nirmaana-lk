@@ -108,7 +108,7 @@ export class ArtworkUploadComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    console.log(this.form.value);
+    // console.log(this.form.value);
     this.isLoading = true;
     if (this.mode === "create") {
       this.artworksService.addArtwork(
@@ -129,6 +129,6 @@ export class ArtworkUploadComponent implements OnInit {
       );
     }
     this.form.reset();
-    this.router.navigate(["/show"]);
+    this.router.navigate(["/"]);
   }
 }

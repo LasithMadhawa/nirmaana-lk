@@ -31,10 +31,14 @@ export class AuthService {
     return this.authStatusListner.asObservable();
   }
 
-  createUser(email: string, password: string) {
-    const authData: AuthData = { email: email, password: password };
+  createUser(email: string, password: string, username: string) {
+    const userData = {
+      username: username,
+      email: email,
+      password: password
+    };
     this.http
-      .post("http://localhost:3000/api/user/signup", authData)
+      .post("http://localhost:3000/api/user/signup", userData)
       .subscribe(response => {
         console.log(response);
       });

@@ -6,6 +6,7 @@ import { ShowcaseComponent } from "./artworks/showcase/showcase.component";
 import { ArtworkUploadComponent } from "./artworks/artwork-upload/artwork-upload.component";
 import { AuthGuard } from "./header/auth.guard";
 import { ArtworkViewComponent } from "./artworks/artwork-view/artwork-view/artwork-view.component";
+import { ProfileComponent } from "./users/profile/profile.component";
 
 const routes: Routes = [
   { path: "", component: LandingComponent },
@@ -23,6 +24,11 @@ const routes: Routes = [
   {
     path: "view/:artworkId",
     component: ArtworkViewComponent
+  },
+  {
+    path: "user/:userId",
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
