@@ -40,6 +40,32 @@ export class ArtworksService {
       });
   }
 
+  getArtworksByTag(searchTag: string) {
+    this.http
+      .get<{ message: string; artworks: any }>(
+        "http://localhost:3000/api/artworks/searchByTag?searchTag=" + searchTag
+      )
+      .pipe(
+        map(artworkData => {
+          return artworkData.artworks.map(artwork => {
+            return {
+              title: artwork.title,
+              preview: artwork.preview,
+              id: artwork._id,
+              imagePath: artwork.imagePath,
+              zipFilePath: artwork.zipFilePath,
+              tags: artwork.tags,
+              designer: artwork.designer
+            };
+          });
+        })
+      )
+      .subscribe(transformedArtworks => {
+        this.artworks = transformedArtworks;
+        this.artworkUploaded.next([...this.artworks]);
+      });
+  }
+
   getArtworkUpdateListener() {
     return this.artworkUploaded.asObservable();
   }

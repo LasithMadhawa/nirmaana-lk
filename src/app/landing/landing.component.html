@@ -24,14 +24,18 @@
       Search for Graphic Design Templates
     </h2>
     <p class="text-center">Download all resources with project files</p>
-    <form [formGroup] class="form-inline my-lg-0 d-flex justify-content-center">
+    <form class="form-inline my-lg-0 d-flex justify-content-center">
       <input
+        #search
         class="form-control form-control-lg searchbar shadow"
         text="text"
         placeholder="Search all resources"
         aria-label="Search"
       />
-      <button [routerLink]="['/show']" routerLinkActive="router-link-active"  class="btn btn-warning btn-lg my-2 my-sm-0 shadow" type="submit">
+      <button
+        (click)="searchByTag(search.value)"
+        class="btn btn-warning btn-lg my-2 my-sm-0 shadow"
+      >
         <fa-icon [icon]="faSearch"></fa-icon><b> Search</b>
       </button>
     </form>

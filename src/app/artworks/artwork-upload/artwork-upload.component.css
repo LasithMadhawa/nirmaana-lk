@@ -1,4 +1,4 @@
-input[type='file'] {
+input[type="file"] {
   visibility: hidden;
 }
 
@@ -9,4 +9,20 @@ input[type='file'] {
 
 .image-preview img {
   height: 100%;
+}
+
+.square-box {
+  border-radius: 0.15rem;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  z-index: 1;
+  background-color: white;
+}
+
+.square-image {
+  position: relative;
+  width: 100%;
+  background: #4679bd;
+  z-index: 2;
 }

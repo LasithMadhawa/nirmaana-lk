@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Injectable } from "@angular/core";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Artwork } from "../artwork.model";
 import { ArtworksService } from "../artworks.service";
@@ -26,7 +26,7 @@ export class ShowcaseComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userId = this.authService.getUserId();
-    this.artworksService.getArtworks();
+    // this.artworksService.getArtworks();
     this.artworkSub = this.artworksService
       .getArtworkUpdateListener()
       .subscribe((artworks: Artwork[]) => {
@@ -49,62 +49,4 @@ export class ShowcaseComponent implements OnInit, OnDestroy {
     this.artworkSub.unsubscribe();
     this.authStatusSub.unsubscribe();
   }
-
-  // artworks = [
-  //   {
-  //     title: 'Design with hand',
-  //     image: 'assets/images/slides/Slide2.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Colourful eye',
-  //     image: 'assets/images/slides/Slide3.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Artist black & white',
-  //     image: '../../assets/images/slides/test1.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Cocacola',
-  //     image: '../../assets/images/slides/Slide1.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Design with hand',
-  //     image: '../../assets/images/slides/Slide2.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Colourful eye',
-  //     image: '../../assets/images/slides/Slide3.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Artist black & white',
-  //     image: '../../assets/images/slides/test1.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Cocacola',
-  //     image: '../../assets/images/slides/Slide1.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Design with hand',
-  //     image: '../../assets/images/slides/Slide2.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Colourful eye',
-  //     image: '../../assets/images/slides/Slide3.jpg',
-  //     designer: 'Sonu'
-  //   },
-  //   {
-  //     title: 'Artist black & white',
-  //     image: '../../assets/images/slides/test1.jpg',
-  //     designer: 'Sonu'
-  //   }
-  // ];
 }
