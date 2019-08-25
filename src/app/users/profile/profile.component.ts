@@ -3,6 +3,7 @@ import { User } from "../user.model";
 import { UserService } from "../user.service";
 import { AuthService } from "src/app/header/auth.service";
 import { ActivatedRoute, Router, ParamMap } from "@angular/router";
+import { Artwork } from "src/app/artworks/artwork.model";
 
 @Component({
   selector: "app-profile",
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
 
   user: User;
   userId: string;
+  favourites: Artwork[];
 
   constructor(
     private userService: UserService,
@@ -44,6 +46,11 @@ export class ProfileComponent implements OnInit {
           description: userData.description
         };
         console.log(this.user.username);
+
+        this.userService.getFavourites(this.userId).subscribe(favourites => {
+          this.favourites = favourites.favourites;
+          console.log(this.favourites);
+        });
       });
     });
   }

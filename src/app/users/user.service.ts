@@ -39,6 +39,22 @@ export class UserService {
   getFavourites(id: string) {
     return this.http.get<{
       favourites: Artwork[];
-    }>("http://localhost:3000/api/user/" + id + "/favourites");
+    }>("http://localhost:3000/api/user/favourites/" + id);
+  }
+
+  addFavourites(id: string, artworkId: string) {
+    console.log("came to service");
+    return this.http.put(
+      "http://localhost:3000/api/user/addtofavourites/" + id,
+      { artworkId }
+    );
+  }
+
+  removeFavourites(id: string, artworkId: string) {
+    console.log("came to service");
+    return this.http.put(
+      "http://localhost:3000/api/user/removefavourites/" + id,
+      { artworkId }
+    );
   }
 }

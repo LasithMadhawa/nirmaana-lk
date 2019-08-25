@@ -21,13 +21,19 @@
           <div>
             <button
               class="btn btn-outline-light btn-sm m-2"
-              *ngIf="!user.favourites.includes(artwork.id)"
+              *ngIf="
+                userIsAuthenticated && !user.favourites.includes(artwork._id)
+              "
+              (click)="OnLike(artwork._id)"
             >
               <fa-icon [icon]="faHeart"></fa-icon>
             </button>
             <button
-              *ngIf="user.favourites.includes(artwork.id)"
+              *ngIf="
+                userIsAuthenticated && user.favourites.includes(artwork._id)
+              "
               class="btn btn-outline-danger btn-sm m-2"
+              (click)="OnDislike(artwork._id)"
             >
               <fa-icon [icon]="faHeart"></fa-icon>
             </button>
@@ -35,14 +41,14 @@
             <button
               *ngIf="userIsAuthenticated && userId === artwork.designer._id"
               class="btn btn-outline-light btn-sm"
-              (click)="OnDelete(artwork.id)"
+              (click)="OnDelete(artwork._id)"
             >
               Delete
             </button>
             <a
               *ngIf="userIsAuthenticated && userId === artwork.designer._id"
               class="btn btn-outline-light btn-sm ml-2"
-              [routerLink]="['/edit', artwork.id]"
+              [routerLink]="['/edit', artwork._id]"
               routerLinkActive="router-link-active"
             >
               Edit
@@ -51,7 +57,7 @@
           <a
             id="artworkTitle"
             class="mt-auto ml-2 mb-2 font-weight-bold text-light text-left"
-            [routerLink]="['/view', artwork.id]"
+            [routerLink]="['/view', artwork._id]"
             routerLinkActive="router-link-active"
           >
             {{ artwork.title }}

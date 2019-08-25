@@ -26,7 +26,7 @@ export class ArtworksService {
             return {
               title: artwork.title,
               preview: artwork.preview,
-              id: artwork._id,
+              _id: artwork._id,
               imagePath: artwork.imagePath,
               zipFilePath: artwork.zipFilePath,
               tags: artwork.tags,
@@ -52,7 +52,7 @@ export class ArtworksService {
             return {
               title: artwork.title,
               preview: artwork.preview,
-              id: artwork._id,
+              _id: artwork._id,
               imagePath: artwork.imagePath,
               zipFilePath: artwork.zipFilePath,
               tags: artwork.tags.value,
@@ -103,7 +103,7 @@ export class ArtworksService {
       )
       .subscribe(responseData => {
         const artwork: Artwork = {
-          id: responseData.artwork.id,
+          _id: responseData.artwork._id,
           title: title,
           preview: preview,
           imagePath: responseData.artwork.imagePath,
@@ -117,7 +117,7 @@ export class ArtworksService {
   }
 
   updateArtwork(
-    id: string,
+    _id: string,
     title: string,
     preview: string,
     image: File | string,
@@ -127,7 +127,7 @@ export class ArtworksService {
     let artworkData: Artwork | FormData;
     if (typeof image === "object" || typeof zipFile === "object") {
       artworkData = new FormData();
-      artworkData.append("id", id);
+      artworkData.append("id", _id);
       artworkData.append("title", title);
       artworkData.append("preview", preview);
       artworkData.append("image", image, title);
@@ -135,7 +135,7 @@ export class ArtworksService {
       artworkData.append("tags", tags);
     } else {
       artworkData = {
-        id: id,
+        _id: _id,
         title: title,
         preview: preview,
         imagePath: image,
@@ -145,12 +145,12 @@ export class ArtworksService {
       };
     }
     this.http
-      .put("http://localhost:3000/api/artworks/" + id, artworkData)
+      .put("http://localhost:3000/api/artworks/" + _id, artworkData)
       .subscribe(response => {
         const updatedArtworks = [...this.artworks];
-        const oldArtworkIndex = updatedArtworks.findIndex(p => p.id === id);
+        const oldArtworkIndex = updatedArtworks.findIndex(p => p._id === _id);
         const artwork: Artwork = {
-          id: id,
+          _id: _id,
           title: title,
           preview: preview,
           imagePath: "",
@@ -170,7 +170,7 @@ export class ArtworksService {
       .delete("http://localhost:3000/api/artworks/" + artworkId)
       .subscribe(() => {
         const updatedArtworks = this.artworks.filter(
-          artwork => artwork.id !== artworkId
+          artwork => artwork._id !== artworkId
         );
         this.artworks = updatedArtworks;
         this.artworkUploaded.next([...this.artworks]);

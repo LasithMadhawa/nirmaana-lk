@@ -54,7 +54,7 @@ export class ArtworkUploadComponent implements OnInit {
           .subscribe(artworkData => {
             this.isLoading = false;
             this.artwork = {
-              id: artworkData._id,
+              _id: artworkData._id,
               title: artworkData.title,
               preview: artworkData.preview,
               imagePath: artworkData.imagePath,

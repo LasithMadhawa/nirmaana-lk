@@ -39,7 +39,7 @@ export class ArtworkViewComponent implements OnInit {
       this.artworkId = paramMap.get("artworkId");
       this.artworkService.getArtwork(this.artworkId).subscribe(artworkData => {
         this.artwork = {
-          id: artworkData._id,
+          _id: artworkData._id,
           title: artworkData.title,
           preview: artworkData.preview,
           imagePath: artworkData.imagePath,

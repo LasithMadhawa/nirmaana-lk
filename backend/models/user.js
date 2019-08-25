@@ -6,11 +6,8 @@ const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isDesigner: { type: Boolean, default: false, required: true },
-  downloads: { type: [mongoose.Schema.Types.ObjectId], ref: "Artwork" },
-  favourites: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "Artwork"
-  },
+  downloads: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artwork" }],
+  favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artwork" }],
   skills: { type: String },
   description: { type: String }
 });

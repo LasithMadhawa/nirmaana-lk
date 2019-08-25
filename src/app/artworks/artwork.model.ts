@@ -1,7 +1,7 @@
 import { User } from "../users/user.model";
 
 export interface Artwork {
-  id: string;
+  _id: string;
   title: string;
   preview: string;
   imagePath: string;

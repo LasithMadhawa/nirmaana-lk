@@ -115,7 +115,7 @@ router.put(
       zipFilePath = url + "/images" + req.files.zipFile[0].filename;
     }
     const artwork = new Artwork({
-      _id: req.body.id,
+      _id: req.body._id,
       title: req.body.title,
       preview: req.body.preview,
       imagePath: imagePath,

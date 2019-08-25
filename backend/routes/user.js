@@ -6,6 +6,27 @@ const User = require("../models/user");
 
 const router = express.Router();
 
+router.put("/addtofavourites/:id", (req, res, next) => {
+  User.findByIdAndUpdate(
+    req.params.id,
+    { $push: { favourites: req.body.artworkId } },
+    () => {
+      res.status(200).json({ message: "Added to favourites" });
+    }
+  );
+});
+
+router.put("/removefavourites/:id", (req, res, next) => {
+  User.findByIdAndUpdate(
+    req.params.id,
+    { $pull: { favourites: { $in: [req.body.artworkId] } } },
+    { multi: true },
+    () => {
+      res.status(200).json({ message: "Removed from favourites" });
+    }
+  );
+});
+
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hash => {
     const user = new User({
@@ -71,6 +92,23 @@ router.get("/:id", (req, res, next) => {
     .then(user => {
       if (user) {
         res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: "User Not Found" });
+      }
+    });
+});
+
+router.get("/favourites/:id", (req, res, next) => {
+  User.findById(req.params.id)
+    .populate({
+      path: "favourites",
+      populate: { path: "favourites" },
+      populate: { path: "designer" }
+    })
+    .then(user => {
+      if (user) {
+        console.log(user);
+        res.status(200).json({ favourites: user.favourites });
       } else {
         res.status(404).json({ message: "User Not Found" });
       }
