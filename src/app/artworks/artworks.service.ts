@@ -41,6 +41,12 @@ export class ArtworksService {
       });
   }
 
+  getArtworksByDesigner(id: string) {
+    return this.http.get<Artwork[]>(
+      "http://localhost:3000/api/artworks/searchByDesigner?designer=" + id
+    );
+  }
+
   getArtworksByTag(searchTag: string) {
     this.http
       .get<{ message: string; artworks: any }>(

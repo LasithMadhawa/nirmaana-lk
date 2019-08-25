@@ -19,6 +19,8 @@ import { AuthInterceptor } from "./header/auth-interceptor";
 import { ArtworkViewComponent } from "./artworks/artwork-view/artwork-view/artwork-view.component";
 import { CacheRouteReuseStrategy } from "./cache-route-reuse.strategy";
 import { ProfileComponent } from './users/profile/profile.component';
+import { CreateProfileComponent } from './users/create-profile/create-profile.component';
+import { DesignerProfileComponent } from './users/designer-profile/designer-profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ProfileComponent } from './users/profile/profile.component';
     ShowcaseComponent,
     ArtworkUploadComponent,
     ArtworkViewComponent,
-    ProfileComponent
+    ProfileComponent,
+    CreateProfileComponent,
+    DesignerProfileComponent
   ],
   imports: [
     BrowserModule,

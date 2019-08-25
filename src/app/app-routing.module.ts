@@ -7,6 +7,8 @@ import { ArtworkUploadComponent } from "./artworks/artwork-upload/artwork-upload
 import { AuthGuard } from "./header/auth.guard";
 import { ArtworkViewComponent } from "./artworks/artwork-view/artwork-view/artwork-view.component";
 import { ProfileComponent } from "./users/profile/profile.component";
+import { CreateProfileComponent } from "./users/create-profile/create-profile.component";
+import { DesignerProfileComponent } from "./users/designer-profile/designer-profile.component";
 
 const routes: Routes = [
   { path: "", component: LandingComponent },
@@ -29,6 +31,15 @@ const routes: Routes = [
     path: "user/:userId",
     component: ProfileComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: "editUser/:userId",
+    component: CreateProfileComponent
+    // canActivate: [AuthGuard]
+  },
+  {
+    path: "becomeDesigner/:userId",
+    component: DesignerProfileComponent
   }
 ];
 

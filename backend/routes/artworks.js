@@ -159,6 +159,15 @@ router.get("/searchByTag", (req, res, next) => {
     });
 });
 
+router.get("/searchByDesigner", (req, res, next) => {
+  let designerId = req.query.designer;
+  Artwork.find({ designer: designerId })
+    .populate("designer")
+    .then(documents => {
+      res.status(200).json(documents);
+    });
+});
+
 router.get("/:id", (req, res, next) => {
   Artwork.findById(req.params.id)
     .populate("designer")

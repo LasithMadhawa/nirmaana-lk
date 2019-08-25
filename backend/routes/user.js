@@ -3,8 +3,29 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
+
+router.put("/:id", checkAuth, (req, res, next) => {
+  const user = {
+    isDesigner: req.body.isDesigner,
+    skills: req.body.skills,
+    description: req.body.description
+  };
+  User.updateOne({ _id: req.params.id }, user)
+    .then(result => {
+      res.status(201).json({
+        message: "User Updated!",
+        result: result
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
+});
 
 router.put("/addtofavourites/:id", (req, res, next) => {
   User.findByIdAndUpdate(
@@ -107,7 +128,7 @@ router.get("/favourites/:id", (req, res, next) => {
     })
     .then(user => {
       if (user) {
-        console.log(user);
+        // console.log(user);
         res.status(200).json({ favourites: user.favourites });
       } else {
         res.status(404).json({ message: "User Not Found" });

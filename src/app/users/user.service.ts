@@ -18,6 +18,15 @@ export class UserService {
     private authService: AuthService
   ) {}
 
+  updateAsDesigner(id: string, skills: string, description: string) {
+    console.log("User service listening");
+    return this.http.put("http://localhost:3000/api/user/" + id, {
+      isDesigner: true,
+      skills,
+      description
+    });
+  }
+
   getUser(id: string) {
     // this.userId = this.authService.getUserId();
     return this.http.get<{
