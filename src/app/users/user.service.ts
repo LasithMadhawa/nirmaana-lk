@@ -36,12 +36,9 @@ export class UserService {
     // });
   }
 
-  getUserData() {
-    // this.getUser();
-    return this.user;
-  }
-
-  getUserName() {
-    return this.username;
+  getFavourites(id: string) {
+    return this.http.get<{
+      favourites: Artwork[];
+    }>("http://localhost:3000/api/user/" + id + "/favourites");
   }
 }

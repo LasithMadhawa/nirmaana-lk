@@ -95,8 +95,8 @@ export class AuthService {
   logout() {
     this.token = null;
     this.isAuthenticated = false;
-    this.authStatusListner.next(false);
     this.userId = null;
+    this.authStatusListner.next(false);
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     // this.router.navigate(["/"]);

@@ -34,6 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
+    this.userId = this.authService.getUserId();
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListnerSubs = this.authService
       .getAuthStatusListner()
@@ -65,8 +66,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSignup(form: NgForm) {
     if (form.invalid) {
+      console.log("Invalid");
       return;
     }
+    console.log("Valid");
+
     this.authService.createUser(
       form.value.email,
       form.value.password,

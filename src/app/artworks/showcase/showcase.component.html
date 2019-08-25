@@ -19,9 +19,19 @@
         <!-- <div class="square-overlay"></div> -->
         <a class="square-content d-flex align-items-start flex-column">
           <div>
-            <button class="btn btn-outline-light btn-sm m-2">
+            <button
+              class="btn btn-outline-light btn-sm m-2"
+              *ngIf="!user.favourites.includes(artwork.id)"
+            >
               <fa-icon [icon]="faHeart"></fa-icon>
             </button>
+            <button
+              *ngIf="user.favourites.includes(artwork.id)"
+              class="btn btn-outline-danger btn-sm m-2"
+            >
+              <fa-icon [icon]="faHeart"></fa-icon>
+            </button>
+
             <button
               *ngIf="userIsAuthenticated && userId === artwork.designer._id"
               class="btn btn-outline-light btn-sm"
