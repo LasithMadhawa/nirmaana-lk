@@ -85,7 +85,8 @@ router.post(
       imagePath: url + "/images/" + req.files.image[0].filename,
       zipFilePath: url + "/images" + req.files.zipFile[0].filename,
       tags: JSON.parse(req.body.tags),
-      designer: req.userData.userId
+      designer: req.userData.userId,
+      price: parseInt(req.body.price)
     });
     artwork.save().then(addedArtwork => {
       res.status(201).json({
@@ -121,7 +122,8 @@ router.put(
       imagePath: imagePath,
       zipFilePath: zipFilePath,
       tags: JSON.parse(req.body.tags),
-      designer: req.userData.userId
+      designer: req.userData.userId,
+      price: parseInt(req.body.price)
     });
     Artwork.updateOne(
       { _id: req.params.id, designer: req.userData.userId },

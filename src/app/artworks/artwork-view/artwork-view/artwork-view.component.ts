@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { Artwork } from "../../artwork.model";
 import { ArtworksService } from "../../artworks.service";
 import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Payment } from "src/app/payments/payment.model";
+import { PaymentService } from "src/app/payments/payment.service";
+import { AuthService } from "src/app/header/auth.service";
 
 @Component({
   selector: "app-artwork-view",
@@ -24,17 +27,22 @@ export class ArtworkViewComponent implements OnInit {
   //   designer: "5d54153fe1137722c4376208",
   //   __v: 0
   // };
-
+  isPaid: boolean;
+  userId: string;
   designer: string;
   artwork: Artwork;
+  payments: Payment[];
   private artworkId: string;
 
   constructor(
     private artworkService: ArtworksService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private paymentService: PaymentService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.userId = this.authService.getUserId();
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.artworkId = paramMap.get("artworkId");
       this.artworkService.getArtwork(this.artworkId).subscribe(artworkData => {
@@ -45,9 +53,20 @@ export class ArtworkViewComponent implements OnInit {
           imagePath: artworkData.imagePath,
           zipFilePath: artworkData.zipFilePath,
           tags: artworkData.tags,
-          designer: artworkData.designer
+          designer: artworkData.designer,
+          price: artworkData.price
         };
       });
     });
+    // this.paymentService.getPayments().subscribe(payments => {
+    //   this.payments = payments.payments;
+    //   console.log(payments);
+    // });
+    this.paymentService
+      .isPaid(this.artworkId, this.userId)
+      .subscribe(isPaid => {
+        this.isPaid = isPaid.isPaid;
+        console.log("Paid for" + this.isPaid);
+      });
   }
 }

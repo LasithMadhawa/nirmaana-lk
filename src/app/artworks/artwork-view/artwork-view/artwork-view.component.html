@@ -16,7 +16,17 @@
           <button class="btn btn-dark m-1">{{ tag.display }}</button>
         </div>
       </div>
-      <button class="btn btn-success btn-lg btn-block mt-3">Download</button>
+      <button *ngIf="isPaid" class="btn btn-success btn-lg btn-block mt-3">
+        Download
+      </button>
+      <button
+        *ngIf="!isPaid"
+        [routerLink]="['/payment', artwork.price, artwork._id]"
+        routerLinkActive="router-link-active"
+        class="btn btn-warning btn-lg btn-block mt-3"
+      >
+        Pay
+      </button>
     </div>
   </div>
 </div>

@@ -30,7 +30,8 @@ export class ArtworksService {
               imagePath: artwork.imagePath,
               zipFilePath: artwork.zipFilePath,
               tags: artwork.tags,
-              designer: artwork.designer
+              designer: artwork.designer,
+              price: artwork.price
             };
           });
         })
@@ -62,7 +63,8 @@ export class ArtworksService {
               imagePath: artwork.imagePath,
               zipFilePath: artwork.zipFilePath,
               tags: artwork.tags.value,
-              designer: artwork.designer
+              designer: artwork.designer,
+              price: artwork.price
             };
           });
         })
@@ -86,6 +88,7 @@ export class ArtworksService {
       zipFilePath: string;
       tags: string;
       designer: User[];
+      price: number;
     }>("http://localhost:3000/api/artworks/" + id);
   }
 
@@ -94,7 +97,8 @@ export class ArtworksService {
     preview: string,
     image: File,
     zipFile: File,
-    tags: string
+    tags: string,
+    price: number
   ) {
     const artworkData = new FormData();
     artworkData.append("title", title);
@@ -102,6 +106,7 @@ export class ArtworksService {
     artworkData.append("image", image);
     artworkData.append("zipFile", zipFile);
     artworkData.append("tags", tags);
+    artworkData.append("price", price.toString());
     this.http
       .post<{ message: string; artwork: Artwork }>(
         "http://localhost:3000/api/artworks",
@@ -115,7 +120,8 @@ export class ArtworksService {
           imagePath: responseData.artwork.imagePath,
           zipFilePath: responseData.artwork.zipFilePath,
           tags: tags,
-          designer: null
+          designer: null,
+          price: price
         };
         this.artworks.push(artwork);
         this.artworkUploaded.next([...this.artworks]);
@@ -128,7 +134,8 @@ export class ArtworksService {
     preview: string,
     image: File | string,
     zipFile: File | string,
-    tags: string
+    tags: string,
+    price: number
   ) {
     let artworkData: Artwork | FormData;
     if (typeof image === "object" || typeof zipFile === "object") {
@@ -139,6 +146,7 @@ export class ArtworksService {
       artworkData.append("image", image, title);
       artworkData.append("zipFile", zipFile);
       artworkData.append("tags", tags);
+      artworkData.append("price", price.toString());
     } else {
       artworkData = {
         _id: _id,
@@ -147,7 +155,8 @@ export class ArtworksService {
         imagePath: image,
         zipFilePath: zipFile,
         tags: tags,
-        designer: null
+        designer: null,
+        price: price
       };
     }
     this.http
@@ -162,7 +171,8 @@ export class ArtworksService {
           imagePath: "",
           zipFilePath: "",
           tags: tags,
-          designer: null
+          designer: null,
+          price: price
         };
 
         updatedArtworks[oldArtworkIndex] = artwork;

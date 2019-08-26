@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RouteReuseStrategy } from "@angular/router/";
+import { CreditCardDirectivesModule } from "angular-cc-library";
 
 import { AppComponent } from "./app.component";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
@@ -18,9 +19,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthInterceptor } from "./header/auth-interceptor";
 import { ArtworkViewComponent } from "./artworks/artwork-view/artwork-view/artwork-view.component";
 import { CacheRouteReuseStrategy } from "./cache-route-reuse.strategy";
-import { ProfileComponent } from './users/profile/profile.component';
-import { CreateProfileComponent } from './users/create-profile/create-profile.component';
-import { DesignerProfileComponent } from './users/designer-profile/designer-profile.component';
+import { ProfileComponent } from "./users/profile/profile.component";
+import { CreateProfileComponent } from "./users/create-profile/create-profile.component";
+import { DesignerProfileComponent } from "./users/designer-profile/designer-profile.component";
+import { PaymentsComponent } from "./payments/payments.component";
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { DesignerProfileComponent } from './users/designer-profile/designer-prof
     ArtworkViewComponent,
     ProfileComponent,
     CreateProfileComponent,
-    DesignerProfileComponent
+    DesignerProfileComponent,
+    PaymentsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { DesignerProfileComponent } from './users/designer-profile/designer-prof
     HttpClientModule,
     AppRoutingModule,
     TagInputModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CreditCardDirectivesModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

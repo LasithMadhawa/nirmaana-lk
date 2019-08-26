@@ -9,6 +9,7 @@ import { ArtworkViewComponent } from "./artworks/artwork-view/artwork-view/artwo
 import { ProfileComponent } from "./users/profile/profile.component";
 import { CreateProfileComponent } from "./users/create-profile/create-profile.component";
 import { DesignerProfileComponent } from "./users/designer-profile/designer-profile.component";
+import { PaymentsComponent } from "./payments/payments.component";
 
 const routes: Routes = [
   { path: "", component: LandingComponent },
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: "becomeDesigner/:userId",
     component: DesignerProfileComponent
+  },
+  {
+    path: "payment/:price/:artworkId",
+    component: PaymentsComponent
   }
 ];
 

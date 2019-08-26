@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const artworksRoutes = require("./routes/artworks");
 const userRoutes = require("./routes/user");
+const paymentRoutes = require("./routes/payment");
 
 const app = express();
 
@@ -49,5 +50,6 @@ function ignoreFavicon(req, res, next) {
 
 app.use("/api/artworks", artworksRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/payment", paymentRoutes);
 
 module.exports = app;

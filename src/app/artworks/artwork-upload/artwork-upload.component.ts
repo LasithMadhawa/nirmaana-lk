@@ -41,7 +41,8 @@ export class ArtworkUploadComponent implements OnInit {
         validators: [Validators.required],
         asyncValidators: [zipMimeType]
       }),
-      tags: new FormControl(null, { validators: [Validators.required] })
+      tags: new FormControl(null, { validators: [Validators.required] }),
+      price: new FormControl(null, { validators: [Validators.required] })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("artworkId")) {
@@ -60,14 +61,16 @@ export class ArtworkUploadComponent implements OnInit {
               imagePath: artworkData.imagePath,
               zipFilePath: artworkData.zipFilePath,
               tags: artworkData.tags,
-              designer: artworkData.designer
+              designer: artworkData.designer,
+              price: artworkData.price
             };
             this.form.setValue({
               title: this.artwork.title,
               preview: this.artwork.preview,
               image: this.artwork.imagePath,
               zipFile: this.artwork.zipFilePath,
-              tags: this.artwork.tags
+              tags: this.artwork.tags,
+              price: this.artwork.price
             });
             this.imagePreview = this.artwork.imagePath;
             this.zipFileName = this.artwork.zipFilePath;
@@ -80,7 +83,8 @@ export class ArtworkUploadComponent implements OnInit {
           preview: null,
           image: null,
           tags: null,
-          zipFile: null
+          zipFile: null,
+          price: null
         });
       }
     });
@@ -116,7 +120,8 @@ export class ArtworkUploadComponent implements OnInit {
         this.form.value.preview,
         this.form.value.image,
         this.form.value.zipFile,
-        JSON.stringify(this.form.value.tags).toLowerCase()
+        JSON.stringify(this.form.value.tags).toLowerCase(),
+        this.form.value.price
       );
     } else {
       this.artworksService.updateArtwork(
@@ -125,7 +130,8 @@ export class ArtworkUploadComponent implements OnInit {
         this.form.value.preview,
         this.form.value.image,
         this.form.value.zipFile,
-        JSON.stringify(this.form.value.tags).toLowerCase()
+        JSON.stringify(this.form.value.tags).toLowerCase(),
+        this.form.value.price
       );
     }
     this.form.reset();
